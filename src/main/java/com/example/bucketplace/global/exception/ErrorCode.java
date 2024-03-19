@@ -13,6 +13,9 @@ public enum ErrorCode {
     FAIL_LOGIN("로그인에 실패했습니다."),
     EXPIRED_ACCESS_TOKEN("Access Token 유효 시간이 만료되었습니다."),
     INVALID_ACCESS_TOKEN("유효하지 않은 Access Token입니다."),
+    EXPIRED_REFRESH_TOKEN("Refresh Token 유효 시간이 만료되었습니다."),
+    INVALID_REFRESH_TOKEN("유효하지 않은 Refresh Token입니다."),
+    NOT_FOUND_REFRESH_TOKEN("찾을 수 없는 Refresh Token입니다."),
     ;
 
     private final String message;

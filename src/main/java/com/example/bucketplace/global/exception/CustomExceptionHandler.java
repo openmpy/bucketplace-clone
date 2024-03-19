@@ -28,6 +28,13 @@ public class CustomExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(RefreshTokenException.class)
+    public ResponseDto<?> handleRefreshTokenException(RefreshTokenException e) {
+        log.error("handleRefreshTokenException", e);
+        return ResponseDto.fail(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseDto<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         Map<String, String> errorMap = new HashMap<>();

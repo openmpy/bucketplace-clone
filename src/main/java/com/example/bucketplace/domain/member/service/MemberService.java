@@ -10,6 +10,7 @@ import com.example.bucketplace.global.exception.ErrorCode;
 import com.example.bucketplace.global.exception.RefreshTokenException;
 import com.example.bucketplace.global.jwt.TokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -80,5 +81,35 @@ public class MemberService {
 
         response.addHeader(TokenProvider.AUTHORIZATION_HEADER, newAccessToken);
         tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);
+    }
+
+    @Transactional
+    public void logout(String refreshToken, HttpServletResponse response) {
+        if (refreshToken == null) {
+            throw new RefreshTokenException(ErrorCode.NOT_FOUND_REFRESH_TOKEN.getMessage());
+        }
+
+        try {
+            tokenProvider.isExpired(refreshToken);
+        } catch (ExpiredJwtException e) {
+            throw new RefreshTokenException(ErrorCode.EXPIRED_REFRESH_TOKEN.getMessage());
+        }
+
+        String type = tokenProvider.getTokenType(refreshToken);
+        if (!type.equals("refresh")) {
+            throw new RefreshTokenException(ErrorCode.INVALID_REFRESH_TOKEN.getMessage());
+        }
+
+        boolean isExist = refreshTokenRepository.existsById(refreshToken);
+        if (Boolean.FALSE.equals(isExist)) {
+            throw new RefreshTokenException(ErrorCode.INVALID_REFRESH_TOKEN.getMessage());
+        }
+
+        refreshTokenRepository.deleteById(refreshToken);
+        Cookie cookie = new Cookie(TokenProvider.REFRESH_TOKEN_COOKIE, null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
     }
 }

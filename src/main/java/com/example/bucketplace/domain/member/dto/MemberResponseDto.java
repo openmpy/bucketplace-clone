@@ -23,4 +23,14 @@ public class MemberResponseDto {
             this.createdAt = member.getCreatedAt();
         }
     }
+
+    @Getter
+    public static class SigninMemberResponseDto {
+
+        private final String email;
+
+        public SigninMemberResponseDto(Member member) {
+            this.email = member.getEmail();
+        }
+    }
 }

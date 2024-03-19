@@ -22,6 +22,9 @@ public class Review extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
+    @Column
+    private int rating;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
@@ -31,8 +34,9 @@ public class Review extends Timestamped {
     private Product product;
 
     @Builder
-    public Review(String contents, Member member, Product product) {
+    public Review(String contents, int rating, Member member, Product product) {
         this.contents = contents;
+        this.rating = rating;
         this.member = member;
         this.product = product;
     }

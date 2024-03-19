@@ -1,7 +1,9 @@
 package com.example.bucketplace.domain.member.controller;
 
+import com.example.bucketplace.domain.member.controller.docs.MemberControllerDocs;
 import com.example.bucketplace.domain.member.dto.MemberResponseDto.SignupMemberResponseDto;
 import com.example.bucketplace.domain.member.service.MemberService;
+import com.example.bucketplace.global.dto.ResponseDto;
 import com.example.bucketplace.global.jwt.TokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -12,7 +14,7 @@ import static com.example.bucketplace.domain.member.dto.MemberRequestDto.SignupM
 
 @RequestMapping("/api/v1/members")
 @RestController
-public class MemberController {
+public class MemberController implements MemberControllerDocs {
 
     private final MemberService memberService;
 
@@ -22,8 +24,9 @@ public class MemberController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
-    public SignupMemberResponseDto signup(@RequestBody @Valid SignupMemberRequestDto requestDto) {
-        return memberService.signup(requestDto);
+    public ResponseDto<SignupMemberResponseDto> signup(@RequestBody @Valid SignupMemberRequestDto requestDto) {
+        SignupMemberResponseDto responseDto = memberService.signup(requestDto);
+        return ResponseDto.success("회원가입 기능", responseDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

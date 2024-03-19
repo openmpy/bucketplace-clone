@@ -31,4 +31,10 @@ public class MemberController {
     public void reissue(@CookieValue(TokenProvider.REFRESH_TOKEN_COOKIE) String refreshToken, HttpServletResponse response) {
         memberService.reissue(refreshToken, response);
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PostMapping("/logout")
+    public void logout(@CookieValue(TokenProvider.REFRESH_TOKEN_COOKIE) String refreshToken, HttpServletResponse response) {
+        memberService.logout(refreshToken, response);
+    }
 }

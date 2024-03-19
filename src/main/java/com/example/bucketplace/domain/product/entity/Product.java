@@ -32,12 +32,20 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private String imageUrl;
 
+    @Column
+    private boolean isFreeDelivery;
+
+    @Column
+    private boolean isSpecialPrice;
+
     @Builder
-    public Product(String brand, String name, long price, double discount, String imageUrl) {
+    public Product(String brand, String name, long price, double discount, String imageUrl, boolean isFreeDelivery, boolean isSpecialPrice) {
         this.brand = brand;
         this.name = name;
         this.price = price;
         this.discount = discount;
         this.imageUrl = imageUrl;
+        this.isFreeDelivery = isFreeDelivery;
+        this.isSpecialPrice = isSpecialPrice;
     }
 }

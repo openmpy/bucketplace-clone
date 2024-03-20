@@ -15,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReviewService {
-
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
-
     private final ProductRepository productRepository;
 
     public ReviewService(ReviewRepository reviewRepository, MemberRepository memberRepository, ProductRepository productRepository) {

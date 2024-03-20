@@ -41,4 +41,16 @@ public class ReviewResponseDto {
             this.modifiedAt = review.getModifiedAt();
         }
     }
+
+    @Getter
+    public static class UpdateReviewResponseDto {
+
+        private String contents;
+        private int rating;
+
+        public UpdateReviewResponseDto(Review review) {
+            this.contents = review.getContents();
+            this.rating = review.getRating();
+        }
+    }
 }

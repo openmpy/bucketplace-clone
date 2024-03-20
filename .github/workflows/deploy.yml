@@ -23,11 +23,10 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
-      - name: Install Chrome
+      - name: Install Google Chrome
         run: |
-          sudo apt-get install google-chrome-stable
-          wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip
-          unzip ./chromedriver_linux64.zip
+          chmod +x ./scripts/InstallChrome.sh
+           ./scripts/InstallChrome.sh
 
       - name: Create application-dev.yml
         run: |

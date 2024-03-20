@@ -5,7 +5,9 @@ import com.example.bucketplace.domain.member.repository.MemberRepository;
 import com.example.bucketplace.domain.product.entity.Product;
 import com.example.bucketplace.domain.product.repository.ProductRepository;
 import com.example.bucketplace.domain.review.dto.ReviewRequestDto.CreateReviewRequestDto;
+import com.example.bucketplace.domain.review.dto.ReviewRequestDto.UpdateReviewRequestDto;
 import com.example.bucketplace.domain.review.dto.ReviewResponseDto.CreateReviewResponseDto;
+import com.example.bucketplace.domain.review.dto.ReviewResponseDto.UpdateReviewResponseDto;
 import com.example.bucketplace.domain.review.entity.Review;
 import com.example.bucketplace.domain.review.repository.ReviewRepository;
 import com.example.bucketplace.global.exception.BadRequestException;
@@ -35,5 +37,21 @@ public class ReviewService {
 
         Review review = reviewRepository.save(reviewRequestDto.toEntity(member, product));
         return new CreateReviewResponseDto(review);
+    }
+
+    @Transactional
+    public UpdateReviewResponseDto updateReview(Long productId, Long id, String email, UpdateReviewRequestDto reviewRequestDto) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage()));
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_PRODUCT.getMessage()));
+
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_REVIEW.getMessage()));
+
+        review.updateReview(reviewRequestDto.getContents(), reviewRequestDto.getRating());
+
+        return new UpdateReviewResponseDto(review);
     }
 }

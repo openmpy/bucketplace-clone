@@ -31,4 +31,26 @@ public class ReviewRequestDto {
         }
 
     }
+
+    @Getter
+    public static class UpdateReviewRequestDto {
+
+        @Schema(description = "리뷰", example = "너무너무너무 예뻐요.")
+        @NotBlank(message = "리뷰를 입력해주세요.")
+        private String contents;
+
+        @Schema(description = "별점", example = "5")
+        @PositiveOrZero(message = "별점을 입력해주세요.")
+        private int rating;
+
+        public Review toEntity(Member member, Product product) {
+            return Review.builder()
+                    .contents(this.contents)
+                    .rating(this.rating)
+                    .member(member)
+                    .product(product)
+                    .build();
+        }
+
+    }
 }

@@ -5,6 +5,7 @@ import com.example.bucketplace.domain.product.entity.Product;
 import com.example.bucketplace.global.entity.Timestamped;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,7 @@ public class Bookmark extends Timestamped {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Builder
     public Bookmark(Member member, Product product) {
         this.member = member;
         this.product = product;

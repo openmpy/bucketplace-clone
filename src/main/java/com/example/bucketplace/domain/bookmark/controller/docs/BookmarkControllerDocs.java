@@ -16,4 +16,10 @@ public interface BookmarkControllerDocs {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long productId
     );
+
+    @Operation(summary = "북마크 삭제 기능", description = "북마크를 삭제할 수 있는 API")
+    void deleteBookmark(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long id
+    );
 }

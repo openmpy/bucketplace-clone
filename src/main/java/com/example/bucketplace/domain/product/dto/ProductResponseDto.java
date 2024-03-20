@@ -1,6 +1,7 @@
 package com.example.bucketplace.domain.product.dto;
 
 import com.example.bucketplace.domain.product.entity.Product;
+import com.example.bucketplace.domain.review.dto.ReviewResponseDto.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
@@ -43,6 +44,19 @@ public class ProductResponseDto {
 
         public GetProductListResponseDto(List<GetProductResponseDto> products) {
             this.products = products;
+        }
+    }
+
+    @Getter
+    public static class GetProductReviewResponseDto {
+        private final GetProductResponseDto product;
+        private final List<GetReviewResponseDto> reviews;
+
+        public GetProductReviewResponseDto(
+                GetProductResponseDto product, List<GetReviewResponseDto> reviews
+        ) {
+            this.product = product;
+            this.reviews = reviews;
         }
     }
 }

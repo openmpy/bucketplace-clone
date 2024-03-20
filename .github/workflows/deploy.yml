@@ -23,6 +23,11 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
+      - name: Install Google Chrome
+        run: |
+          chmod +x ./scripts/InstallChrome.sh
+          ./scripts/InstallChrome.sh
+
       - name: Create application-dev.yml
         run: |
           cd ./src/main/resources

@@ -27,6 +27,7 @@ public class ReviewService {
         this.productRepository = productRepository;
     }
 
+
     @Transactional
     public CreateReviewResponseDto createReview(Long id, String email, CreateReviewRequestDto reviewRequestDto) {
         Member member = memberRepository.findByEmail(email)
@@ -53,5 +54,23 @@ public class ReviewService {
         review.updateReview(reviewRequestDto.getContents(), reviewRequestDto.getRating());
 
         return new UpdateReviewResponseDto(review);
+    }
+
+    @Transactional
+    public void deleteReview(Long productId, Long id, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage()));
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_PRODUCT.getMessage()));
+
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_REVIEW.getMessage()));
+
+        if (!review.getMember().equals(member)) {
+            throw new BadRequestException(ErrorCode.NOT_MATCH_REVIEW.getMessage());
+        }
+
+        reviewRepository.delete(review);
     }
 }

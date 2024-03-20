@@ -2,7 +2,7 @@ package com.example.bucketplace.domain.review.controller.docs;
 
 import com.example.bucketplace.domain.review.dto.ReviewRequestDto;
 import com.example.bucketplace.domain.review.dto.ReviewResponseDto;
-import com.example.bucketplace.domain.review.dto.ReviewResponseDto.*;
+import com.example.bucketplace.domain.review.dto.ReviewResponseDto.UpdateReviewResponseDto;
 import com.example.bucketplace.global.dto.ResponseDto;
 import com.example.bucketplace.global.security.UserDetailsImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +28,13 @@ public interface ReviewControllerDocs {
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid ReviewRequestDto.UpdateReviewRequestDto reviewRequestDto
+    );
+
+    @Operation(summary = "리뷰 삭제 기능", description = "리뷰를 삭제 할 수 있는 API")
+    ResponseDto<ReviewResponseDto> deleteReview(
+            @PathVariable Long productId,
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     );
 
 }

@@ -23,6 +23,11 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxcb-1-0
+
       - name: Install Google Chrome
         run: |
           chmod +x ./scripts/InstallChrome.sh

@@ -1,5 +1,6 @@
 package com.example.bucketplace.domain.product.controller;
 
+import com.example.bucketplace.domain.product.controller.docs.ProductControllerDocs;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.*;
 import com.example.bucketplace.domain.product.service.ProductService;
 import com.example.bucketplace.global.dto.ResponseDto;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/v1/products")
 @RestController
-public class ProductController {
+public class ProductController implements ProductControllerDocs {
 
     private final ProductService productService;
 

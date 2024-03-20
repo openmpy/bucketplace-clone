@@ -15,8 +15,8 @@ public class ProductResponseDto {
         private final double discount;
         private final long price;
         private final String imageUrl;
-        private final boolean isFreeDelivery;
-        private final boolean isSpecialPrice;
+        private final Boolean isFreeDelivery;
+        private final Boolean isSpecialPrice;
 
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private final LocalDateTime createdAt;

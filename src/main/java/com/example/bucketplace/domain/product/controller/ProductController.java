@@ -5,10 +5,7 @@ import com.example.bucketplace.domain.product.dto.ProductResponseDto.*;
 import com.example.bucketplace.domain.product.service.ProductService;
 import com.example.bucketplace.global.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/products")
 @RestController
@@ -27,5 +24,10 @@ public class ProductController implements ProductControllerDocs {
         return ResponseDto.success("전체 상품 조회 기능", products);
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{productId}")
+    public ResponseDto<GetProductResponseDto> getProductDetail(@PathVariable Long productId) {
+        GetProductResponseDto product = productService.getProductDetail(productId);
+        return ResponseDto.success("선택 상품 조회 기능", product);
+    }
 }

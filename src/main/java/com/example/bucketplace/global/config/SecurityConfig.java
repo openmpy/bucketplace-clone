@@ -81,7 +81,7 @@ public class SecurityConfig {
                                 "/api/v1/members/check"
                         ).permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/products").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/products", "/api/v1/products/**").permitAll()
                         .requestMatchers("/ping").permitAll()
                         .anyRequest().authenticated()
         );

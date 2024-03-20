@@ -23,15 +23,8 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libX11
-
-      - name: Install Google Chrome
-        run: |
-          chmod +x ./scripts/InstallChrome.sh
-           ./scripts/InstallChrome.sh
+      - name: Install Chromedriver
+        uses: nanasess/setup-chromedriver@v2
 
       - name: Create application-dev.yml
         run: |

@@ -23,8 +23,8 @@ public class ProductController implements ProductControllerDocs {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public ResponseDto<GetProductListResponseDto> getProducts() {
-        GetProductListResponseDto responseDtoList = productService.getProducts();
-        return ResponseDto.success("전체 상품 조회 기능", responseDtoList);
+        GetProductListResponseDto products = productService.getProducts();
+        return ResponseDto.success("전체 상품 조회 기능", products);
     }
 
 

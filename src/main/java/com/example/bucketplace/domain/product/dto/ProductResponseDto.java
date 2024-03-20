@@ -39,10 +39,10 @@ public class ProductResponseDto {
 
     @Getter
     public static class GetProductListResponseDto {
-        private final List<GetProductResponseDto> responseDtoList;
+        private final List<GetProductResponseDto> products;
 
-        public GetProductListResponseDto(List<GetProductResponseDto> responseDtoList) {
-            this.responseDtoList = responseDtoList;
+        public GetProductListResponseDto(List<GetProductResponseDto> products) {
+            this.products = products;
         }
     }
 }

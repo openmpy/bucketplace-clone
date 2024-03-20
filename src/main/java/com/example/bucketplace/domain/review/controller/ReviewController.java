@@ -1,5 +1,6 @@
 package com.example.bucketplace.domain.review.controller;
 
+import com.example.bucketplace.domain.review.controller.docs.ReviewControllerDocs;
 import com.example.bucketplace.domain.review.dto.ReviewRequestDto.CreateReviewRequestDto;
 import com.example.bucketplace.domain.review.dto.ReviewRequestDto.UpdateReviewRequestDto;
 import com.example.bucketplace.domain.review.dto.ReviewResponseDto.CreateReviewResponseDto;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1")
 @RestController
-public class ReviewController {
+public class ReviewController implements ReviewControllerDocs {
 
     private final ReviewService reviewService;
 

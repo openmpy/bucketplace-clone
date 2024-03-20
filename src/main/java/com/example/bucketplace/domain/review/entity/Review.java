@@ -8,16 +8,22 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "review_tbl")
+@SQLDelete(sql = "UPDATE review_tbl SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 public class Review extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private boolean deleted = Boolean.FALSE;
 
     @Column(nullable = false)
     private String contents;
@@ -34,7 +40,8 @@ public class Review extends Timestamped {
     private Product product;
 
     @Builder
-    public Review(String contents, int rating, Member member, Product product) {
+    public Review(boolean deleted, String contents, int rating, Member member, Product product) {
+        this.deleted = deleted;
         this.contents = contents;
         this.rating = rating;
         this.member = member;

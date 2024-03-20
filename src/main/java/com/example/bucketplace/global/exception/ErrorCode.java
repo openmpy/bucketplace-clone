@@ -22,7 +22,8 @@ public enum ErrorCode {
     NOT_FOUND_PRODUCT_ID("찾을 수 없는 상품 번호입니다."),
     ALREADY_EXIST_BOOKMARK("이미 등록된 북마크 정보입니다."),
     NOT_FOUND_BOOKMARK_ID("찾을 수 없는 북마크 번호입니다."),
-    NOT_MATCH_BOOKMARK_MEMBER("북마크 회원 정보와 일치하지 않습니다.");
+    NOT_MATCH_BOOKMARK_MEMBER("북마크 회원 정보와 일치하지 않습니다."),
+    NOT_MATCH_REVIEW("리뷰 회원 정보와 일치하지 않습니다.");
 
     private final String message;
 

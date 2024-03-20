@@ -44,4 +44,13 @@ public class ReviewController implements ReviewControllerDocs {
         return ResponseDto.success("리뷰 수정 기능", updateReviewResponseDto);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/products/{productId}/reviews/{id}")
+    public void deleteReview(
+            @PathVariable Long productId,
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        reviewService.deleteReview(productId, id, userDetails.getUsername());
+    }
+
 }

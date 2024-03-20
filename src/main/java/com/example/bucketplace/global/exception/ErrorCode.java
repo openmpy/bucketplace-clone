@@ -16,6 +16,7 @@ public enum ErrorCode {
     EXPIRED_REFRESH_TOKEN("Refresh Token 유효 시간이 만료되었습니다."),
     INVALID_REFRESH_TOKEN("유효하지 않은 Refresh Token입니다."),
     NOT_FOUND_REFRESH_TOKEN("찾을 수 없는 Refresh Token입니다."),
+    BAD_REQUEST_DUPLICATION_TYPE("중복 검사할 수 없는 타입입니다."),
     ;
 
     private final String message;

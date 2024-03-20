@@ -33,4 +33,14 @@ public class MemberResponseDto {
             this.email = member.getEmail();
         }
     }
+
+    @Getter
+    public static class CheckMemberResponseDto {
+
+        private final Boolean isExist;
+
+        public CheckMemberResponseDto(Boolean isExist) {
+            this.isExist = isExist;
+        }
+    }
 }

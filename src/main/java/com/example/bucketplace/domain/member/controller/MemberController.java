@@ -1,6 +1,7 @@
 package com.example.bucketplace.domain.member.controller;
 
 import com.example.bucketplace.domain.member.controller.docs.MemberControllerDocs;
+import com.example.bucketplace.domain.member.dto.MemberResponseDto.CheckMemberResponseDto;
 import com.example.bucketplace.domain.member.dto.MemberResponseDto.SignupMemberResponseDto;
 import com.example.bucketplace.domain.member.service.MemberService;
 import com.example.bucketplace.global.dto.ResponseDto;
@@ -39,5 +40,11 @@ public class MemberController implements MemberControllerDocs {
     @PostMapping("/logout")
     public void logout(@CookieValue(TokenProvider.REFRESH_TOKEN_COOKIE) String refreshToken, HttpServletResponse response) {
         memberService.logout(refreshToken, response);
+    }
+
+    @GetMapping("/check")
+    public ResponseDto<CheckMemberResponseDto> check(@RequestParam("type") String type, @RequestParam("value") String value) {
+        CheckMemberResponseDto responseDto = memberService.check(type, value);
+        return ResponseDto.success("중복 검사", responseDto);
     }
 }

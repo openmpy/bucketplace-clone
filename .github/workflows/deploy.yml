@@ -23,11 +23,11 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
-      - uses: browser-actions/setup-chrome@latest
-      - run: chrome --version
-
-      - name: Setup Chromedriver
-        uses: nanasess/setup-chromedriver@v2
+      - name: Install Chrome
+        run: |
+          sudo apt-get install google-chrome-stable
+          wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip
+          unzip ./chromedriver_linux64.zip
 
       - name: Create application-dev.yml
         run: |

@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface ReviewControllerDocs {
 
     @Operation(summary = "리뷰 등록 기능", description = "리뷰 등록을 할 수 있는 API")
-    ResponseDto<ReviewResponseDto.CreateReviewResponseDto> createReview(@PathVariable Long productId,
-                                                                        @RequestBody @Valid ReviewRequestDto.CreateReviewRequestDto reviewRequestDto,
-                                                                        @AuthenticationPrincipal UserDetailsImpl userDetails
+    ResponseDto<ReviewResponseDto.CreateReviewResponseDto> createReview(
+            @PathVariable Long productId,
+            @RequestBody @Valid ReviewRequestDto.CreateReviewRequestDto reviewRequestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     );
 
 }

@@ -22,9 +22,10 @@ public class ReviewController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/products/{productId}/reviews")
-    public ResponseDto<CreateReviewResponseDto> createReview(@PathVariable Long productId,
-                                                             @RequestBody @Valid CreateReviewRequestDto reviewRequestDto,
-                                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseDto<CreateReviewResponseDto> createReview(
+            @PathVariable Long productId,
+            @RequestBody @Valid CreateReviewRequestDto reviewRequestDto,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         CreateReviewResponseDto createReviewResponseDto = reviewService.createReview(productId, userDetails.getUsername(), reviewRequestDto);
         return ResponseDto.success("리뷰 등록 기능", createReviewResponseDto);
     }

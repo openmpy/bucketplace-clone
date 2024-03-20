@@ -40,6 +40,15 @@ dependencies {
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.3'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.3'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.3'
+
+    // selenium
+    implementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
+
+    // webdrivermanager
+    implementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
+
+    // javafaker
+    implementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
 tasks.named('bootBuildImage') {

@@ -3,7 +3,6 @@ package com.example.bucketplace.domain.review.controller;
 import com.example.bucketplace.domain.review.controller.docs.ReviewControllerDocs;
 import com.example.bucketplace.domain.review.dto.ReviewRequestDto.CreateReviewRequestDto;
 import com.example.bucketplace.domain.review.dto.ReviewRequestDto.UpdateReviewRequestDto;
-import com.example.bucketplace.domain.review.dto.ReviewResponseDto;
 import com.example.bucketplace.domain.review.dto.ReviewResponseDto.CreateReviewResponseDto;
 import com.example.bucketplace.domain.review.dto.ReviewResponseDto.UpdateReviewResponseDto;
 import com.example.bucketplace.domain.review.service.ReviewService;
@@ -45,14 +44,13 @@ public class ReviewController implements ReviewControllerDocs {
         return ResponseDto.success("리뷰 수정 기능", updateReviewResponseDto);
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/products/{productId}/reviews/{id}")
-    public ResponseDto<ReviewResponseDto> deleteReview(
+    public void deleteReview(
             @PathVariable Long productId,
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         reviewService.deleteReview(productId, id, userDetails.getUsername());
-        return ResponseDto.success("선택한 리뷰 삭제 기능", null);
     }
 
 }

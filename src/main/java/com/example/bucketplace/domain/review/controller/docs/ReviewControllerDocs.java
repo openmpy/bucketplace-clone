@@ -31,7 +31,7 @@ public interface ReviewControllerDocs {
     );
 
     @Operation(summary = "리뷰 삭제 기능", description = "리뷰를 삭제 할 수 있는 API")
-    ResponseDto<ReviewResponseDto> deleteReview(
+    void deleteReview(
             @PathVariable Long productId,
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails

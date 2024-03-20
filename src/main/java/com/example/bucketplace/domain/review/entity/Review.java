@@ -40,4 +40,9 @@ public class Review extends Timestamped {
         this.member = member;
         this.product = product;
     }
+
+    public void updateReview(String contents, int rating) {
+        this.contents = contents;
+        this.rating = rating;
+    }
 }

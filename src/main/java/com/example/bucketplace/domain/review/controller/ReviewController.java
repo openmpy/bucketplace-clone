@@ -1,7 +1,9 @@
 package com.example.bucketplace.domain.review.controller;
 
 import com.example.bucketplace.domain.review.dto.ReviewRequestDto.CreateReviewRequestDto;
+import com.example.bucketplace.domain.review.dto.ReviewRequestDto.UpdateReviewRequestDto;
 import com.example.bucketplace.domain.review.dto.ReviewResponseDto.CreateReviewResponseDto;
+import com.example.bucketplace.domain.review.dto.ReviewResponseDto.UpdateReviewResponseDto;
 import com.example.bucketplace.domain.review.service.ReviewService;
 import com.example.bucketplace.global.dto.ResponseDto;
 import com.example.bucketplace.global.security.UserDetailsImpl;
@@ -24,10 +26,21 @@ public class ReviewController {
     @PostMapping("/products/{productId}/reviews")
     public ResponseDto<CreateReviewResponseDto> createReview(
             @PathVariable Long productId,
-            @RequestBody @Valid CreateReviewRequestDto reviewRequestDto,
-            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody @Valid CreateReviewRequestDto reviewRequestDto) {
         CreateReviewResponseDto createReviewResponseDto = reviewService.createReview(productId, userDetails.getUsername(), reviewRequestDto);
         return ResponseDto.success("리뷰 등록 기능", createReviewResponseDto);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/products/{productId}/reviews/{id}")
+    public ResponseDto<UpdateReviewResponseDto> updateReview(
+            @PathVariable Long productId,
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody @Valid UpdateReviewRequestDto reviewRequestDto) {
+        UpdateReviewResponseDto updateReviewResponseDto = reviewService.updateReview(productId, id, userDetails.getUsername(), reviewRequestDto);
+        return ResponseDto.success("리뷰 수정 기능", updateReviewResponseDto);
     }
 
 }

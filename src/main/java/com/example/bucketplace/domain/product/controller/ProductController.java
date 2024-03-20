@@ -26,8 +26,8 @@ public class ProductController implements ProductControllerDocs {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{productId}")
-    public ResponseDto<GetProductResponseDto> getProductDetail(@PathVariable Long productId) {
-        GetProductResponseDto product = productService.getProductDetail(productId);
+    public ResponseDto<GetProductReviewResponseDto> getProductDetail(@PathVariable Long productId) {
+        GetProductReviewResponseDto product = productService.getProductDetail(productId);
         return ResponseDto.success("선택 상품 조회 기능", product);
     }
 }

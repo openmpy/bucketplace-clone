@@ -12,5 +12,5 @@ public interface ProductControllerDocs {
     ResponseDto<GetProductListResponseDto> getProducts();
 
     @Operation(summary = "선택 상품 조회 기능", description = "선택 상품 조회 할 수 있는 API")
-    ResponseDto<GetProductResponseDto> getProductDetail(@PathVariable Long productId);
+    ResponseDto<GetProductReviewResponseDto> getProductDetail(@PathVariable Long productId);
 }

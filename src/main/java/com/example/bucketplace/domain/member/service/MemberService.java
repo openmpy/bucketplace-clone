@@ -1,6 +1,7 @@
 package com.example.bucketplace.domain.member.service;
 
 import com.example.bucketplace.domain.member.dto.MemberRequestDto.SignupMemberRequestDto;
+import com.example.bucketplace.domain.member.dto.MemberResponseDto.CheckMemberResponseDto;
 import com.example.bucketplace.domain.member.dto.MemberResponseDto.SignupMemberResponseDto;
 import com.example.bucketplace.domain.member.entity.Member;
 import com.example.bucketplace.domain.member.repository.MemberRepository;
@@ -111,5 +112,13 @@ public class MemberService {
         cookie.setPath("/");
 
         response.addCookie(cookie);
+    }
+
+    public CheckMemberResponseDto check(String type, String value) {
+        return switch (type) {
+            case "email" -> new CheckMemberResponseDto(memberRepository.existsByEmail(value));
+            case "nickname" -> new CheckMemberResponseDto(memberRepository.existsByNickname(value));
+            default -> throw new BadRequestException(ErrorCode.BAD_REQUEST_DUPLICATION_TYPE.getMessage());
+        };
     }
 }

@@ -23,6 +23,12 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
 
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Setup Chromedriver
+        uses: nanasess/setup-chromedriver@v1.0.1
+
       - name: Create application-dev.yml
         run: |
           cd ./src/main/resources

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductResponseDto {
     @Getter
-    public static class  GetProductResponseDto{
+    public static class GetProductResponseDto {
         private final String brand;
         private final String name;
         private final double discount;
@@ -36,6 +36,7 @@ public class ProductResponseDto {
             this.modifiedAt = product.getModifiedAt();
         }
     }
+
     @Getter
     public static class GetProductListResponseDto {
         private final List<GetProductResponseDto> responseDtoList;

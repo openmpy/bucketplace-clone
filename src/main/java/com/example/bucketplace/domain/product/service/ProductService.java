@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -21,12 +22,9 @@ public class ProductService {
     @Transactional(readOnly = true)
     public GetProductListResponseDto getProducts() {
         List<Product> productList = productRepository.findAll();
-        List<GetProductResponseDto> productResponseDtoList = new ArrayList<>();
-        for (Product product : productList) {
-            productResponseDtoList.add(
-                    new GetProductResponseDto(product)
-            );
-        }
+        List<GetProductResponseDto> productResponseDtoList = productList.stream()
+                .map(GetProductResponseDto::new)
+                .collect(Collectors.toList());
         return new GetProductListResponseDto(productResponseDtoList);
     }
 }

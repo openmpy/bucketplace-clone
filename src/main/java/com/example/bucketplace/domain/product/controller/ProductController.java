@@ -24,7 +24,7 @@ public class ProductController implements ProductControllerDocs {
     @GetMapping
     public ResponseDto<GetProductListResponseDto> getProducts() {
         GetProductListResponseDto responseDtoList = productService.getProducts();
-        return ResponseDto.success("상품 조회 기능", responseDtoList);
+        return ResponseDto.success("전체 상품 조회 기능", responseDtoList);
     }
 
 

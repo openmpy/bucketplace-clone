@@ -46,4 +46,19 @@ public class BookmarkService {
 
         return new CreateBookmarkResponseDto(bookmark);
     }
+
+    @Transactional
+    public void deleteBookmark(String email, Long id) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
+                new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage())
+        );
+        Bookmark bookmark = bookmarkRepository.findById(id).orElseThrow(() ->
+                new BadRequestException(ErrorCode.NOT_FOUND_BOOKMARK_ID.getMessage())
+        );
+        if (!bookmark.getMember().equals(member)) {
+            throw new BadRequestException(ErrorCode.NOT_MATCH_BOOKMARK_MEMBER.getMessage());
+        }
+
+        bookmarkRepository.delete(bookmark);
+    }
 }

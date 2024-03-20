@@ -28,4 +28,13 @@ public class BookmarkController implements BookmarkControllerDocs {
         CreateBookmarkResponseDto responseDto = bookmarkService.createBookmark(userDetails.getUsername(), productId);
         return ResponseDto.success("북마크 등록 기능", responseDto);
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void deleteBookmark(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long id
+    ) {
+        bookmarkService.deleteBookmark(userDetails.getUsername(), id);
+    }
 }

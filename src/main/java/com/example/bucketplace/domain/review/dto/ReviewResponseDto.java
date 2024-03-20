@@ -24,33 +24,4 @@ public class ReviewResponseDto {
         }
     }
 
-    @Getter
-    public static class UpdateReviewResponseDto {
-
-        private final Member nickname;
-        private final String contents;
-        private final int rating;
-        private final LocalDateTime createdAt;
-        private final LocalDateTime modifiedAt;
-
-        public UpdateReviewResponseDto(Review review) {
-            this.nickname = getNickname();
-            this.contents = review.getContents();
-            this.rating = review.getRating();
-            this.createdAt = review.getCreatedAt();
-            this.modifiedAt = review.getModifiedAt();
-        }
-    }
-
-    @Getter
-    public static class UpdateReviewResponseDto {
-
-        private String contents;
-        private int rating;
-
-        public UpdateReviewResponseDto(Review review) {
-            this.contents = review.getContents();
-            this.rating = review.getRating();
-        }
-    }
 }

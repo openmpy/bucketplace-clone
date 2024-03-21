@@ -1,6 +1,7 @@
 package com.example.bucketplace.domain.bookmark.controller;
 
 import com.example.bucketplace.domain.bookmark.controller.docs.BookmarkControllerDocs;
+import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.CheckBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.CreateBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.GetBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.service.BookmarkService;
@@ -31,6 +32,15 @@ public class BookmarkController implements BookmarkControllerDocs {
     ) {
         CreateBookmarkResponseDto responseDto = bookmarkService.createBookmark(userDetails.getUsername(), productId);
         return ResponseDto.success("북마크 등록 기능", responseDto);
+    }
+
+    @GetMapping("/bookmarks/{productId}")
+    public ResponseDto<CheckBookmarkResponseDto> checkBookmark(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long productId
+    ) {
+        CheckBookmarkResponseDto responseDto = bookmarkService.checkBookmark(userDetails.getUsername(), productId);
+        return ResponseDto.success("북마크 등록 여부 확인 기능", responseDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

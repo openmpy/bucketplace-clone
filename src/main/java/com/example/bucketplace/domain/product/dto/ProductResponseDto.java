@@ -1,7 +1,7 @@
 package com.example.bucketplace.domain.product.dto;
 
 import com.example.bucketplace.domain.product.entity.Product;
-import com.example.bucketplace.domain.review.dto.ReviewResponseDto.*;
+import com.example.bucketplace.domain.review.dto.ReviewResponseDto.GetReviewResponseDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
@@ -61,4 +61,6 @@ public class ProductResponseDto {
             this.reviews = reviews;
         }
     }
+
+
 }

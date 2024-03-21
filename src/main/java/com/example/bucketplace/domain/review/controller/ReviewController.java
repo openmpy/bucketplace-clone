@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/reviews")
 @RestController
 public class ReviewController implements ReviewControllerDocs {
 
@@ -24,7 +24,7 @@ public class ReviewController implements ReviewControllerDocs {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/products/{productId}/reviews")
+    @PostMapping("/{productId}")
     public ResponseDto<CreateReviewResponseDto> createReview(
             @PathVariable Long productId,
             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -34,23 +34,21 @@ public class ReviewController implements ReviewControllerDocs {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/products/{productId}/reviews/{id}")
+    @PutMapping("/{id}")
     public ResponseDto<UpdateReviewResponseDto> updateReview(
-            @PathVariable Long productId,
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid UpdateReviewRequestDto reviewRequestDto) {
-        UpdateReviewResponseDto updateReviewResponseDto = reviewService.updateReview(productId, id, userDetails.getUsername(), reviewRequestDto);
+        UpdateReviewResponseDto updateReviewResponseDto = reviewService.updateReview(id, userDetails.getUsername(), reviewRequestDto);
         return ResponseDto.success("리뷰 수정 기능", updateReviewResponseDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/products/{productId}/reviews/{id}")
+    @DeleteMapping("/{id}")
     public void deleteReview(
-            @PathVariable Long productId,
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        reviewService.deleteReview(productId, id, userDetails.getUsername());
+        reviewService.deleteReview(id, userDetails.getUsername());
     }
 
 }

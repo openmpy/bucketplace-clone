@@ -24,7 +24,6 @@ public interface ReviewControllerDocs {
 
     @Operation(summary = "리뷰 수정 기능", description = "리뷰를 수정 할 수 있는 API")
     ResponseDto<UpdateReviewResponseDto> updateReview(
-            @PathVariable Long productId,
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid ReviewRequestDto.UpdateReviewRequestDto reviewRequestDto
@@ -32,7 +31,6 @@ public interface ReviewControllerDocs {
 
     @Operation(summary = "리뷰 삭제 기능", description = "리뷰를 삭제 할 수 있는 API")
     void deleteReview(
-            @PathVariable Long productId,
             @PathVariable Long id,
             @AuthenticationPrincipal UserDetailsImpl userDetails
     );

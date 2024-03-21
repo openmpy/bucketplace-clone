@@ -23,6 +23,16 @@ public class BookmarkResponseDto {
     }
 
     @Getter
+    public static class CheckBookmarkResponseDto {
+
+        private final Boolean isExist;
+
+        public CheckBookmarkResponseDto(Boolean isExist) {
+            this.isExist = isExist;
+        }
+    }
+
+    @Getter
     public static class GetBookmarkResponseDto {
 
         private final Long id;

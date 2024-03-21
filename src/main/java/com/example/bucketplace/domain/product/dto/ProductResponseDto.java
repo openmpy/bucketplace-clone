@@ -11,6 +11,7 @@ import java.util.List;
 public class ProductResponseDto {
     @Getter
     public static class GetProductResponseDto {
+        private final Long productId;
         private final String brand;
         private final String name;
         private final double discount;
@@ -26,6 +27,7 @@ public class ProductResponseDto {
         private final LocalDateTime modifiedAt;
 
         public GetProductResponseDto(Product product) {
+            this.productId = product.getId();
             this.brand = product.getBrand();
             this.name = product.getName();
             this.price = product.getPrice();

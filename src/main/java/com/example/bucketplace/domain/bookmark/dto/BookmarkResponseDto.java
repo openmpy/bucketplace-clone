@@ -21,4 +21,16 @@ public class BookmarkResponseDto {
             this.createdAt = bookmark.getCreatedAt();
         }
     }
+
+    @Getter
+    public static class GetBookmarkResponseDto {
+
+        private final Long id;
+        private final String imageUrl;
+
+        public GetBookmarkResponseDto(Bookmark bookmark) {
+            this.id = bookmark.getId();
+            this.imageUrl = bookmark.getProduct().getImageUrl();
+        }
+    }
 }

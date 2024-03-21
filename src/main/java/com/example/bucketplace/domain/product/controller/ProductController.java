@@ -39,7 +39,7 @@ public class ProductController implements ProductControllerDocs {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/search?name=내용")
+    @GetMapping("/search")
     public ResponseDto<List<GetProductResponseDto>> findProduct(@RequestParam String name) {
         List<GetProductResponseDto> findProductResponseDto = productService.findProduct(name);
         return ResponseDto.success("상품 검색 기능", findProductResponseDto);

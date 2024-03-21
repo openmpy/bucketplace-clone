@@ -1,6 +1,5 @@
 package com.example.bucketplace.domain.product.service;
 
-import com.example.bucketplace.domain.product.dto.ProductResponseDto.FindProductResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductListResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductReviewResponseDto;
@@ -47,10 +46,11 @@ public class ProductService {
         return new GetProductReviewResponseDto(new GetProductResponseDto(product), reviews);
     }
 
-    public List<FindProductResponseDto> findProduct(String name) {
+    @Transactional(readOnly = true)
+    public List<GetProductResponseDto> findProduct(String name) {
         List<Product> productList = productRepository.findProductByNameContaining(name);
         return productList.stream()
-                .map(FindProductResponseDto::new)
+                .map(GetProductResponseDto::new)
                 .collect(Collectors.toList());
     }
 }

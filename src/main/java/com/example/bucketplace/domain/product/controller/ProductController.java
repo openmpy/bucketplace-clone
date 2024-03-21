@@ -1,8 +1,8 @@
 package com.example.bucketplace.domain.product.controller;
 
 import com.example.bucketplace.domain.product.controller.docs.ProductControllerDocs;
-import com.example.bucketplace.domain.product.dto.ProductResponseDto.FindProductResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductListResponseDto;
+import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductReviewResponseDto;
 import com.example.bucketplace.domain.product.service.ProductService;
 import com.example.bucketplace.global.dto.ResponseDto;
@@ -39,9 +39,9 @@ public class ProductController implements ProductControllerDocs {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/products")
-    public ResponseDto<List<FindProductResponseDto>> findProduct(@RequestParam String name) {
-        List<FindProductResponseDto> findProductResponseDto = productService.findProduct(name);
+    @GetMapping("/search?name=내용")
+    public ResponseDto<List<GetProductResponseDto>> findProduct(@RequestParam String name) {
+        List<GetProductResponseDto> findProductResponseDto = productService.findProduct(name);
         return ResponseDto.success("상품 검색 기능", findProductResponseDto);
     }
 

@@ -62,33 +62,5 @@ public class ProductResponseDto {
         }
     }
 
-    @Getter
-    public static class FindProductResponseDto {
-        private final String brand;
-        private final String name;
-        private final double discount;
-        private final long price;
-        private final String imageUrl;
-        private final Boolean isFreeDelivery;
-        private final Boolean isSpecialPrice;
 
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-        private final LocalDateTime createdAt;
-
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-        private final LocalDateTime modifiedAt;
-
-        public FindProductResponseDto(Product product) {
-            this.brand = product.getBrand();
-            this.name = product.getName();
-            this.price = product.getPrice();
-            this.discount = product.getDiscount();
-            this.imageUrl = product.getImageUrl();
-            this.isFreeDelivery = product.isFreeDelivery();
-            this.isSpecialPrice = product.isSpecialPrice();
-            this.createdAt = product.getCreatedAt();
-            this.modifiedAt = product.getModifiedAt();
-        }
-
-    }
 }

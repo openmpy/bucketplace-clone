@@ -1,7 +1,7 @@
 package com.example.bucketplace.domain.product.controller.docs;
 
-import com.example.bucketplace.domain.product.dto.ProductResponseDto.FindProductResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductListResponseDto;
+import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductReviewResponseDto;
 import com.example.bucketplace.global.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,5 +23,5 @@ public interface ProductControllerDocs {
     ResponseDto<GetProductReviewResponseDto> getProductDetail(@PathVariable Long productId);
 
     @Operation(summary = "상품 검색 기능", description = "상품을 검색 할 수 있는 API")
-    ResponseDto<List<FindProductResponseDto>> findProduct(@RequestParam String name);
+    ResponseDto<List<GetProductResponseDto>> findProduct(@RequestParam String name);
 }

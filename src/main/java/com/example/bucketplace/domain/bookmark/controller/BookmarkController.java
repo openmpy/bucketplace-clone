@@ -7,12 +7,11 @@ import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.GetBookma
 import com.example.bucketplace.domain.bookmark.service.BookmarkService;
 import com.example.bucketplace.global.dto.ResponseDto;
 import com.example.bucketplace.global.security.UserDetailsImpl;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api/v1")
 @RestController
@@ -53,13 +52,12 @@ public class BookmarkController implements BookmarkControllerDocs {
     }
 
     @GetMapping("/members/bookmarks")
-    public ResponseDto<Page<GetBookmarkResponseDto>> getBookmarkPage(
+    public ResponseDto<List<GetBookmarkResponseDto>> getBookmarkPage(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<GetBookmarkResponseDto> responseDtoPage = bookmarkService.getBookmarkPage(userDetails.getUsername(), pageable);
-        return ResponseDto.success("회원 북마크 목록 기능", responseDtoPage);
+        List<GetBookmarkResponseDto> responseDtoList = bookmarkService.getBookmarkList(userDetails.getUsername(), page, size);
+        return ResponseDto.success("회원 북마크 목록 기능", responseDtoList);
     }
 }

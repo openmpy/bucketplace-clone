@@ -11,10 +11,12 @@ import com.example.bucketplace.domain.product.entity.Product;
 import com.example.bucketplace.domain.product.repository.ProductRepository;
 import com.example.bucketplace.global.exception.BadRequestException;
 import com.example.bucketplace.global.exception.ErrorCode;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional(readOnly = true)
 @Service
@@ -80,12 +82,14 @@ public class BookmarkService {
         bookmarkRepository.delete(bookmark);
     }
 
-    public Page<GetBookmarkResponseDto> getBookmarkPage(String email, Pageable pageable) {
+    public List<GetBookmarkResponseDto> getBookmarkList(String email, int page, int size) {
         Member member = memberRepository.findByEmail(email).orElseThrow(() ->
                 new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage())
         );
 
-        Page<Bookmark> bookmarkPage = bookmarkRepository.findAllByMemberOrderByCreatedAtDesc(member, pageable);
-        return bookmarkPage.map(GetBookmarkResponseDto::new);
+        Pageable pageable = PageRequest.of(Math.max(0, page - 1), size);
+        return bookmarkRepository.findAllByMemberOrderByCreatedAtDesc(member, pageable).getContent().stream()
+                .map(GetBookmarkResponseDto::new)
+                .toList();
     }
 }

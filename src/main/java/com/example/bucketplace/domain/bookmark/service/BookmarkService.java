@@ -1,6 +1,7 @@
 package com.example.bucketplace.domain.bookmark.service;
 
 import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.CreateBookmarkResponseDto;
+import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.GetBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.entity.Bookmark;
 import com.example.bucketplace.domain.bookmark.repository.BookmarkRepository;
 import com.example.bucketplace.domain.member.entity.Member;
@@ -9,6 +10,8 @@ import com.example.bucketplace.domain.product.entity.Product;
 import com.example.bucketplace.domain.product.repository.ProductRepository;
 import com.example.bucketplace.global.exception.BadRequestException;
 import com.example.bucketplace.global.exception.ErrorCode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,5 +63,14 @@ public class BookmarkService {
         }
 
         bookmarkRepository.delete(bookmark);
+    }
+
+    public Page<GetBookmarkResponseDto> getBookmarkPage(String email, Pageable pageable) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
+                new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage())
+        );
+
+        Page<Bookmark> bookmarkPage = bookmarkRepository.findAllByMemberOrderByCreatedAtDesc(member, pageable);
+        return bookmarkPage.map(GetBookmarkResponseDto::new);
     }
 }

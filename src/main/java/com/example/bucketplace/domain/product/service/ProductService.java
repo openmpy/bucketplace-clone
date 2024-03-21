@@ -7,9 +7,13 @@ import com.example.bucketplace.domain.review.dto.ReviewResponseDto.GetReviewResp
 import com.example.bucketplace.domain.review.repository.ReviewRepository;
 import com.example.bucketplace.global.exception.BadRequestException;
 import com.example.bucketplace.global.exception.ErrorCode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,11 +28,12 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public GetProductListResponseDto getProducts() {
-        List<GetProductResponseDto> products = productRepository.findAll().stream()
-                .map(GetProductResponseDto::new)
-                .toList();
-        return new GetProductListResponseDto(products);
+    public GetProductListResponseDto getProducts(int page, int size) {
+        return new GetProductListResponseDto(
+                productRepository.findAll(PageRequest.of(Math.max(0, page-1), size)).stream()
+                        .map(GetProductResponseDto::new)
+                        .toList()
+        );
     }
 
     @Transactional(readOnly = true)

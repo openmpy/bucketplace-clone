@@ -1,5 +1,6 @@
 package com.example.bucketplace.domain.bookmark.service;
 
+import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.CheckBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.CreateBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.GetBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.entity.Bookmark;
@@ -48,6 +49,20 @@ public class BookmarkService {
         );
 
         return new CreateBookmarkResponseDto(bookmark);
+    }
+
+    public CheckBookmarkResponseDto checkBookmark(String email, Long productId) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
+                new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage())
+        );
+        Product product = productRepository.findById(productId).orElseThrow(() ->
+                new BadRequestException(ErrorCode.NOT_FOUND_PRODUCT_ID.getMessage())
+        );
+
+        if (bookmarkRepository.existsByMemberAndProduct(member, product)) {
+            return new CheckBookmarkResponseDto(true);
+        }
+        return new CheckBookmarkResponseDto(false);
     }
 
     @Transactional

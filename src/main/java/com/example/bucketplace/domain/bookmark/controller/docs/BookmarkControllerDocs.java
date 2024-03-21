@@ -1,6 +1,7 @@
 package com.example.bucketplace.domain.bookmark.controller.docs;
 
 import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto;
+import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.CheckBookmarkResponseDto;
 import com.example.bucketplace.domain.bookmark.dto.BookmarkResponseDto.GetBookmarkResponseDto;
 import com.example.bucketplace.global.dto.ResponseDto;
 import com.example.bucketplace.global.security.UserDetailsImpl;
@@ -16,6 +17,12 @@ public interface BookmarkControllerDocs {
 
     @Operation(summary = "북마크 등록 기능", description = "북마크를 등록할 수 있는 API")
     ResponseDto<BookmarkResponseDto.CreateBookmarkResponseDto> createBookmark(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long productId
+    );
+
+    @Operation(summary = "북마크 등록 여부 확인 기능", description = "북마크 등록 여부를 확인할 수 있는 API")
+    ResponseDto<CheckBookmarkResponseDto> checkBookmark(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long productId
     );

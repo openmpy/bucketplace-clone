@@ -30,7 +30,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public GetProductListResponseDto getProducts(int page, int size) {
         return new GetProductListResponseDto(
-                productRepository.findAll(PageRequest.of(Math.max(0,page-1), size)).stream()
+                productRepository.findAll(PageRequest.of(Math.max(0, page-1), size)).stream()
                         .map(GetProductResponseDto::new)
                         .toList()
         );

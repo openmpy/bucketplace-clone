@@ -80,8 +80,11 @@ public class SecurityConfig {
                                 "/api/v1/members/reissue", "/api/v1/members/logout",
                                 "/api/v1/members/check"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/v1/products", "/api/v1/products/{productId}",
+                                "/api/v1/products/search", "/api/v1/products/search-rank"
+                        ).permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/products", "/api/v1/products/{productId}").permitAll()
                         .requestMatchers("/ping").permitAll()
                         .anyRequest().authenticated()
         );

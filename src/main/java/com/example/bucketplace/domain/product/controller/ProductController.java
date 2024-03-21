@@ -4,6 +4,7 @@ import com.example.bucketplace.domain.product.controller.docs.ProductControllerD
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductListResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductResponseDto;
 import com.example.bucketplace.domain.product.dto.ProductResponseDto.GetProductReviewResponseDto;
+import com.example.bucketplace.domain.product.dto.ProductResponseDto.SearchRankProductResponseDto;
 import com.example.bucketplace.domain.product.service.ProductService;
 import com.example.bucketplace.global.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class ProductController implements ProductControllerDocs {
         GetProductReviewResponseDto product = productService.getProductDetail(productId);
         return ResponseDto.success("선택 상품 조회 기능", product);
     }
-    
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/search")
     public ResponseDto<List<GetProductResponseDto>> findProduct(@RequestParam String name) {
@@ -45,4 +46,9 @@ public class ProductController implements ProductControllerDocs {
         return ResponseDto.success("상품 검색 기능", findProductResponseDto);
     }
 
+    @GetMapping("/search-rank")
+    public ResponseDto<List<SearchRankProductResponseDto>> searchRankProduct() {
+        List<SearchRankProductResponseDto> responseDtoList = productService.searchRankProduct();
+        return ResponseDto.success("실시간 상품 검색 순위 기능", responseDtoList);
+    }
 }

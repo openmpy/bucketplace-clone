@@ -36,7 +36,7 @@ public interface BookmarkControllerDocs {
     @Operation(summary = "회원 북마크 목록 기능", description = "북마크를 삭제할 수 있는 API")
     ResponseDto<Page<GetBookmarkResponseDto>> getBookmarkPage(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     );
 }

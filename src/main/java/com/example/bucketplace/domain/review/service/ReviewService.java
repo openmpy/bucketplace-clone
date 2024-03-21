@@ -41,12 +41,9 @@ public class ReviewService {
     }
 
     @Transactional
-    public UpdateReviewResponseDto updateReview(Long productId, Long id, String email, UpdateReviewRequestDto reviewRequestDto) {
+    public UpdateReviewResponseDto updateReview(Long id, String email, UpdateReviewRequestDto reviewRequestDto) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage()));
-
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_PRODUCT.getMessage()));
 
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_REVIEW.getMessage()));
@@ -57,12 +54,9 @@ public class ReviewService {
     }
 
     @Transactional
-    public void deleteReview(Long productId, Long id, String email) {
+    public void deleteReview(Long id, String email) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage()));
-
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_PRODUCT.getMessage()));
 
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException(ErrorCode.NOT_FOUND_REVIEW.getMessage()));

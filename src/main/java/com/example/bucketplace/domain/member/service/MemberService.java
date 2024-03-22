@@ -108,8 +108,11 @@ public class MemberService {
 
         refreshTokenRepository.deleteById(refreshToken);
         Cookie cookie = new Cookie(TokenProvider.REFRESH_TOKEN_COOKIE, null);
-        cookie.setMaxAge(0);
         cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setAttribute("SameSite", "None");
+        cookie.setMaxAge(0);
 
         response.addCookie(cookie);
     }

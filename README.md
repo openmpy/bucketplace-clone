@@ -96,7 +96,7 @@ erDiagram
 
 URL: https://www.openmpy.com/swagger-ui/index.html
 
-스크린샷 추가 예정
+<img width="726" alt="스크린샷 2024-03-22 오전 10 11 58" src="https://github.com/openmpy/bucketplace-clone/assets/150704638/dab24d61-0607-42e7-92bb-5a9839485480">
 
 ## 📐 시스템 아키텍처
 

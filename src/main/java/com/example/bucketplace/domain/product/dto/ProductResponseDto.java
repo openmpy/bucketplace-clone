@@ -62,5 +62,15 @@ public class ProductResponseDto {
         }
     }
 
+    @Getter
+    public static class SearchRankProductResponseDto {
 
+        private final String keyword;
+        private final double score;
+
+        public SearchRankProductResponseDto(String keyword, double score) {
+            this.keyword = keyword;
+            this.score = score;
+        }
+    }
 }

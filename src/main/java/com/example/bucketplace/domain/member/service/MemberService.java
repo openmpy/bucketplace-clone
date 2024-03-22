@@ -74,11 +74,11 @@ public class MemberService {
 
         String email = tokenProvider.getTokenEmail(refreshToken);
         String role = tokenProvider.getTokenRole(refreshToken);
+        refreshTokenRepository.deleteByToken(refreshToken);
 
         String newAccessToken = tokenProvider.createAccessToken(email, role);
         String newRefreshToken = tokenProvider.createRefreshToken(email, role);
 
-        refreshTokenRepository.deleteById(refreshToken);
 
         response.addHeader(TokenProvider.AUTHORIZATION_HEADER, newAccessToken);
         tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);

@@ -59,7 +59,7 @@ public class ProductScheduler {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             javascriptExecutor.executeScript("window.scrollBy(0, 5000)");
             Thread.sleep(3000);
 

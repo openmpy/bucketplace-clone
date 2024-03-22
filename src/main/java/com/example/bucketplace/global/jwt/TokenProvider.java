@@ -128,6 +128,8 @@ public class TokenProvider {
 //        cookie.setDomain("localhost");
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge((int) (REFRESH_TOKEN_TIME / 1000));
 
         response.addCookie(cookie);

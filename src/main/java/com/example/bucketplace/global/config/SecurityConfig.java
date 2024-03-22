@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
+import java.util.List;
 
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
@@ -66,17 +67,18 @@ public class SecurityConfig {
         http.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
             CorsConfiguration configuration = new CorsConfiguration();
 
-            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5500"));
-            configuration.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:3000"));
-            configuration.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:5500"));
+            configuration.setAllowedOrigins(
+                    List.of(
+                            "http://localhost:3000", "http://localhost:5500",
+                            "http://127.0.0.1:3000", "http://127.0.0.1:5500"
+                    )
+            );
             configuration.setAllowedMethods(Collections.singletonList("*"));
             configuration.setAllowCredentials(true);
             configuration.setAllowedHeaders(Collections.singletonList("*"));
             configuration.setMaxAge(3600L);
 
-            configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+            configuration.setExposedHeaders(List.of("Set-Cookie", "Authorization"));
 
             return configuration;
         }));

@@ -99,7 +99,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
-        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5000", "http://localhost:5500"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(List.of("Authorization"));
 

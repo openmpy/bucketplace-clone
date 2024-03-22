@@ -57,9 +57,9 @@ public class ProductScheduler {
     private List<Product> crawlProducts(WebDriver webDriver) throws InterruptedException {
         List<Product> productList = new ArrayList<>();
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             javascriptExecutor.executeScript("window.scrollBy(0, 5000)");
             Thread.sleep(3000);
 
@@ -91,7 +91,7 @@ public class ProductScheduler {
         boolean isFreeDelivery = safelyFindElement(webElement, By.xpath("//*[@aria-label='무료배송']")).isPresent();
         boolean isSpecialPrice = safelyFindElement(webElement, By.xpath("//*[@aria-label='특가']")).isPresent();
 
-        WebElement imageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".image")));
+        WebElement imageElement = wait.until(ExpectedConditions.visibilityOf(webElement.findElement(By.cssSelector(".image"))));
         String imageUrl = imageElement.getAttribute("src");
 
         return Product.builder()

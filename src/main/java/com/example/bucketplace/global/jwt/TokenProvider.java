@@ -125,7 +125,7 @@ public class TokenProvider {
                 .replaceAll("\\+", "%20");
 
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
-        cookie.setDomain("localhost");
+//        cookie.setDomain("localhost");
         cookie.setPath("/");
         cookie.setHttpOnly(true);
 //        cookie.setSecure(true);

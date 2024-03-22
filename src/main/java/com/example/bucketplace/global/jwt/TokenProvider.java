@@ -126,7 +126,7 @@ public class TokenProvider {
 
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
 //        cookie.setDomain("localhost");
-        cookie.setPath("/");
+//        cookie.setPath("/");
         cookie.setHttpOnly(true);
 //        cookie.setSecure(true);
 //        cookie.setAttribute("SameSite", "None");

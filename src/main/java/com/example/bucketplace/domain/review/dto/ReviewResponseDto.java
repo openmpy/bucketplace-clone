@@ -11,6 +11,7 @@ public class ReviewResponseDto {
     @Getter
     public static class CreateReviewResponseDto {
 
+        private final Long reviewId;
         private final String nickname;
         private final String contents;
         private final int rating;
@@ -19,6 +20,7 @@ public class ReviewResponseDto {
         private final LocalDateTime createdAt;
 
         public CreateReviewResponseDto(Review review) {
+            this.reviewId = review.getId();
             this.nickname = review.getMember().getNickname();
             this.contents = review.getContents();
             this.rating = review.getRating();
@@ -29,6 +31,7 @@ public class ReviewResponseDto {
     @Getter
     public static class UpdateReviewResponseDto {
 
+        private final Long reviewId;
         private final String nickname;
         private final String contents;
         private final int rating;
@@ -40,6 +43,7 @@ public class ReviewResponseDto {
         private final LocalDateTime modifiedAt;
 
         public UpdateReviewResponseDto(Review review) {
+            this.reviewId = review.getId();
             this.nickname = review.getMember().getNickname();
             this.contents = review.getContents();
             this.rating = review.getRating();
@@ -51,6 +55,7 @@ public class ReviewResponseDto {
     @Getter
     public static class GetReviewResponseDto {
 
+        private final Long reviewId;
         private final String nickname;
         private final String contents;
         private final int rating;
@@ -62,6 +67,7 @@ public class ReviewResponseDto {
         private final LocalDateTime modifiedAt;
 
         public GetReviewResponseDto(Review review) {
+            this.reviewId = review.getId();
             this.nickname = review.getMember().getNickname();
             this.contents = review.getContents();
             this.rating = review.getRating();

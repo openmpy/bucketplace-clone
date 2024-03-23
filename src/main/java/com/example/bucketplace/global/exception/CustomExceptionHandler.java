@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestCookieException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -66,6 +67,13 @@ public class CustomExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseDto<?> handleAccessDeniedException(AccessDeniedException e) {
         log.error("handleAccessDeniedException", e);
+        return ResponseDto.fail(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingRequestCookieException.class)
+    public ResponseDto<?> handleMissingRequestCookieException(MissingRequestCookieException e) {
+        log.error("handleMissingRequestCookieException", e);
         return ResponseDto.fail(e.getMessage());
     }
 

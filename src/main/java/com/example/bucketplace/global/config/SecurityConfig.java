@@ -71,7 +71,7 @@ public class SecurityConfig {
                     List.of(
                             "http://localhost:3000", "http://localhost:5500",
                             "http://127.0.0.1:3000", "http://127.0.0.1:5500",
-                            "https://js-teal.vercel.app", "today-home-4-fe.vercel.app"
+                            "https://js-teal.vercel.app", "https://today-home-4-fe.vercel.app"
                     )
             );
             configuration.setAllowedMethods(Collections.singletonList("*"));

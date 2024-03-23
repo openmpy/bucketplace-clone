@@ -1,7 +1,5 @@
 package com.example.bucketplace.global.jwt;
 
-import com.example.bucketplace.domain.member.entity.RefreshToken;
-import com.example.bucketplace.domain.member.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
@@ -9,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +15,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Date;
 
 @Slf4j
@@ -30,11 +30,11 @@ public class TokenProvider {
     private static final long REFRESH_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
 
     private final SecretKey secretKey;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public TokenProvider(@Value("${spring.jwt.secret}") String secret, RefreshTokenRepository refreshTokenRepository) {
+    public TokenProvider(@Value("${spring.jwt.secret}") String secret, RedisTemplate<String, String> redisTemplate) {
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
-        this.refreshTokenRepository = refreshTokenRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     public String getTokenType(String token) {
@@ -111,12 +111,7 @@ public class TokenProvider {
                 .signWith(secretKey)
                 .compact();
 
-        RefreshToken refreshToken = RefreshToken.builder()
-                .token(token)
-                .email(email)
-                .build();
-
-        refreshTokenRepository.save(refreshToken);
+        redisTemplate.opsForValue().set(token, email, Duration.ofSeconds(REFRESH_TOKEN_TIME));
         return token;
     }
 

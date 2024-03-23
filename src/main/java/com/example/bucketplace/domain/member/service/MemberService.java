@@ -5,7 +5,6 @@ import com.example.bucketplace.domain.member.dto.MemberResponseDto.CheckMemberRe
 import com.example.bucketplace.domain.member.dto.MemberResponseDto.SignupMemberResponseDto;
 import com.example.bucketplace.domain.member.entity.Member;
 import com.example.bucketplace.domain.member.repository.MemberRepository;
-import com.example.bucketplace.domain.member.repository.RefreshTokenRepository;
 import com.example.bucketplace.global.exception.BadRequestException;
 import com.example.bucketplace.global.exception.ErrorCode;
 import com.example.bucketplace.global.exception.RefreshTokenException;
@@ -13,6 +12,7 @@ import com.example.bucketplace.global.jwt.TokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisTemplate<String, String> redisTemplate;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
-    public MemberService(MemberRepository memberRepository, RefreshTokenRepository refreshTokenRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
+    public MemberService(MemberRepository memberRepository, RedisTemplate redisTemplate, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
         this.memberRepository = memberRepository;
-        this.refreshTokenRepository = refreshTokenRepository;
+        this.redisTemplate = redisTemplate;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
     }
@@ -67,18 +67,17 @@ public class MemberService {
             throw new RefreshTokenException(ErrorCode.INVALID_REFRESH_TOKEN.getMessage());
         }
 
-        boolean isExist = refreshTokenRepository.existsById(refreshToken);
-        if (Boolean.FALSE.equals(isExist)) {
+        String value = redisTemplate.opsForValue().get(refreshToken);
+        if (value == null) {
             throw new RefreshTokenException(ErrorCode.INVALID_REFRESH_TOKEN.getMessage());
         }
 
         String email = tokenProvider.getTokenEmail(refreshToken);
         String role = tokenProvider.getTokenRole(refreshToken);
-        refreshTokenRepository.deleteByToken(refreshToken);
+        redisTemplate.delete(refreshToken);
 
         String newAccessToken = tokenProvider.createAccessToken(email, role);
         String newRefreshToken = tokenProvider.createRefreshToken(email, role);
-
 
         response.addHeader(TokenProvider.AUTHORIZATION_HEADER, newAccessToken);
         tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);
@@ -101,12 +100,13 @@ public class MemberService {
             throw new RefreshTokenException(ErrorCode.INVALID_REFRESH_TOKEN.getMessage());
         }
 
-        boolean isExist = refreshTokenRepository.existsById(refreshToken);
-        if (Boolean.FALSE.equals(isExist)) {
+        String value = redisTemplate.opsForValue().get(refreshToken);
+        if (value == null) {
             throw new RefreshTokenException(ErrorCode.INVALID_REFRESH_TOKEN.getMessage());
         }
 
-        refreshTokenRepository.deleteById(refreshToken);
+        redisTemplate.delete(refreshToken);
+
         Cookie cookie = new Cookie(TokenProvider.REFRESH_TOKEN_COOKIE, null);
         cookie.setPath("/");
         cookie.setHttpOnly(true);

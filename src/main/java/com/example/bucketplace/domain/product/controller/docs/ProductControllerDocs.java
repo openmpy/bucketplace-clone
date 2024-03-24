@@ -7,6 +7,9 @@ import com.example.bucketplace.domain.product.dto.ProductResponseDto.SearchRankP
 import com.example.bucketplace.global.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -16,6 +19,7 @@ import java.util.List;
 public interface ProductControllerDocs {
     @Operation(summary = "전체 상품 조회 기능", description = "전체 상품 조회 할 수 있는 API")
     ResponseDto<GetProductListResponseDto> getProducts(
+            @AuthenticationPrincipal @Nullable UserDetails userDetails,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     );

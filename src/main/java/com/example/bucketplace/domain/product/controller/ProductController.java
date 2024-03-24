@@ -8,6 +8,9 @@ import com.example.bucketplace.domain.product.dto.ProductResponseDto.SearchRankP
 import com.example.bucketplace.domain.product.service.ProductService;
 import com.example.bucketplace.global.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +28,13 @@ public class ProductController implements ProductControllerDocs {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public ResponseDto<GetProductListResponseDto> getProducts(
+            @AuthenticationPrincipal @Nullable UserDetails userDetails,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
-        GetProductListResponseDto products = productService.getProducts(page, size);
+        GetProductListResponseDto products = productService.getProducts(
+                userDetails != null ? userDetails.getUsername() : null,
+                page, size);
         return ResponseDto.success("전체 상품 조회 기능", products);
     }
 

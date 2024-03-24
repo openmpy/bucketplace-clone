@@ -11,12 +11,14 @@ public class BookmarkResponseDto {
     @Getter
     public static class CreateBookmarkResponseDto {
 
+        private final Long id;
         private final Long productId;
 
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private final LocalDateTime createdAt;
 
         public CreateBookmarkResponseDto(Bookmark bookmark) {
+            this.id = bookmark.getId();
             this.productId = bookmark.getProduct().getId();
             this.createdAt = bookmark.getCreatedAt();
         }
@@ -36,10 +38,12 @@ public class BookmarkResponseDto {
     public static class GetBookmarkResponseDto {
 
         private final Long id;
+        private final Long productId;
         private final String imageUrl;
 
         public GetBookmarkResponseDto(Bookmark bookmark) {
             this.id = bookmark.getId();
+            this.productId = bookmark.getProduct().getId();
             this.imageUrl = bookmark.getProduct().getImageUrl();
         }
     }

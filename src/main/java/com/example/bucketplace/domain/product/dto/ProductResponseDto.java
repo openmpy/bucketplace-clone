@@ -41,10 +41,45 @@ public class ProductResponseDto {
     }
 
     @Getter
-    public static class GetProductListResponseDto {
-        private final List<GetProductResponseDto> products;
+    public static class GetProductBookmarkResponseDto {
+        private final Long productId;
+        private final String brand;
+        private final String name;
+        private final double discount;
+        private final long price;
+        private final String imageUrl;
+        private final Boolean isFreeDelivery;
+        private final Boolean isSpecialPrice;
+        private final Boolean isBookmarked;
 
-        public GetProductListResponseDto(List<GetProductResponseDto> products) {
+
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+        private final LocalDateTime createdAt;
+
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+        private final LocalDateTime modifiedAt;
+
+
+        public GetProductBookmarkResponseDto(Product product, Boolean isBookmarked) {
+            this.productId = product.getId();
+            this.brand = product.getBrand();
+            this.name = product.getName();
+            this.price = product.getPrice();
+            this.discount = product.getDiscount();
+            this.imageUrl = product.getImageUrl();
+            this.isFreeDelivery = product.isFreeDelivery();
+            this.isSpecialPrice = product.isSpecialPrice();
+            this.createdAt = product.getCreatedAt();
+            this.modifiedAt = product.getModifiedAt();
+            this.isBookmarked = isBookmarked;
+        }
+    }
+
+    @Getter
+    public static class GetProductListResponseDto {
+        private final List<GetProductBookmarkResponseDto> products;
+
+        public GetProductListResponseDto(List<GetProductBookmarkResponseDto> products) {
             this.products = products;
         }
     }

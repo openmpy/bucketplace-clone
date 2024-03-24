@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -43,13 +44,17 @@ public class ProductService {
     public GetProductListResponseDto getProducts(String email, int page, int size) {
         Member member = memberRepository.findByEmail(email).orElse(null);
 
-        boolean isBookmarked;
-        List<GetProductBookmarkResponseDto> dtos = new ArrayList<>();
         Page<Product> productList = productRepository.findAll(PageRequest.of(Math.max(0, page - 1), size));
-        for (Product product : productList) {
-            isBookmarked = bookmarkRepository.existsByMemberAndProduct(member, product);
-            dtos.add(new GetProductBookmarkResponseDto(product, isBookmarked));
-        }
+
+        List<GetProductBookmarkResponseDto> dtos = productList.stream()
+                .map(product -> {
+                    boolean isBookmarked = bookmarkRepository.existsByMemberAndProduct(member, product);
+                    long countReview = reviewRepository.countByProduct(product);
+                    double averageRating = reviewRepository.findAverageRatingByProduct(product);
+                    return new GetProductBookmarkResponseDto(product, isBookmarked, countReview, averageRating);
+                })
+                .collect(Collectors.toList());
+
         return new GetProductListResponseDto(dtos);
     }
 

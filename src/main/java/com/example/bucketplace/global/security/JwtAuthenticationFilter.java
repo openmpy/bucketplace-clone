@@ -50,9 +50,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String email = ((UserDetailsImpl) authResult.getPrincipal()).getMember().getEmail();
         String role = ((UserDetailsImpl) authResult.getPrincipal()).getMember().getRole().name();
+        String nickname = ((UserDetailsImpl) authResult.getPrincipal()).getMember().getNickname();
 
-        String accessToken = tokenProvider.createAccessToken(email, role);
-        String refreshToken = tokenProvider.createRefreshToken(email, role);
+        String accessToken = tokenProvider.createAccessToken(email, role, nickname);
+        String refreshToken = tokenProvider.createRefreshToken(email, role, nickname);
 
         response.addHeader(TokenProvider.AUTHORIZATION_HEADER, accessToken);
         tokenProvider.addRefreshTokenToCookie(refreshToken, response);

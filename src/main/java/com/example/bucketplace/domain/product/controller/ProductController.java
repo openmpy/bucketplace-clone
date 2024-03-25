@@ -33,22 +33,32 @@ public class ProductController implements ProductControllerDocs {
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         GetProductListResponseDto products = productService.getProducts(
-                userDetails != null ? userDetails.getUsername() : null,
-                page, size);
+                userDetails != null ? userDetails.getUsername() : null, page, size
+        );
         return ResponseDto.success("전체 상품 조회 기능", products);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{productId}")
-    public ResponseDto<GetProductReviewResponseDto> getProductDetail(@PathVariable Long productId) {
-        GetProductReviewResponseDto product = productService.getProductDetail(productId);
+    public ResponseDto<GetProductReviewResponseDto> getProductDetail(
+            @PathVariable Long productId,
+            @AuthenticationPrincipal @Nullable UserDetails userDetails
+    ) {
+        GetProductReviewResponseDto product = productService.getProductDetail(
+                userDetails != null ? userDetails.getUsername() : null, productId
+        );
         return ResponseDto.success("선택 상품 조회 기능", product);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/search")
-    public ResponseDto<List<GetProductResponseDto>> findProduct(@RequestParam String name) {
-        List<GetProductResponseDto> findProductResponseDto = productService.findProduct(name);
+    public ResponseDto<List<GetProductResponseDto>> findProduct(
+            @RequestParam String name,
+            @AuthenticationPrincipal @Nullable UserDetails userDetails
+    ) {
+        List<GetProductResponseDto> findProductResponseDto = productService.findProduct(
+                userDetails != null ? userDetails.getUsername() : null, name
+        );
         return ResponseDto.success("상품 검색 기능", findProductResponseDto);
     }
 

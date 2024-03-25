@@ -19,6 +19,7 @@ public class ProductResponseDto {
         private final String imageUrl;
         private final Boolean isFreeDelivery;
         private final Boolean isSpecialPrice;
+        private final Boolean isBookmarked;
 
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private final LocalDateTime createdAt;
@@ -26,7 +27,7 @@ public class ProductResponseDto {
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private final LocalDateTime modifiedAt;
 
-        public GetProductResponseDto(Product product) {
+        public GetProductResponseDto(Product product, Boolean isBookmarked) {
             this.productId = product.getId();
             this.brand = product.getBrand();
             this.name = product.getName();
@@ -35,6 +36,7 @@ public class ProductResponseDto {
             this.imageUrl = product.getImageUrl();
             this.isFreeDelivery = product.isFreeDelivery();
             this.isSpecialPrice = product.isSpecialPrice();
+            this.isBookmarked = isBookmarked;
             this.createdAt = product.getCreatedAt();
             this.modifiedAt = product.getModifiedAt();
         }
@@ -53,8 +55,6 @@ public class ProductResponseDto {
         private final Boolean isBookmarked;
         private final long countReview;
         private final double averageRating;
-
-
 
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
         private final LocalDateTime createdAt;

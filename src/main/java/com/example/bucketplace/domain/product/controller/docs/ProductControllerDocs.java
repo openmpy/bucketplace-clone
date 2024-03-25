@@ -25,10 +25,16 @@ public interface ProductControllerDocs {
     );
 
     @Operation(summary = "선택 상품 조회 기능", description = "선택 상품 조회 할 수 있는 API")
-    ResponseDto<GetProductReviewResponseDto> getProductDetail(@PathVariable Long productId);
+    ResponseDto<GetProductReviewResponseDto> getProductDetail(
+            @PathVariable Long productId,
+            @AuthenticationPrincipal @Nullable UserDetails userDetails
+    );
 
     @Operation(summary = "상품 검색 기능", description = "상품을 검색 할 수 있는 API")
-    ResponseDto<List<GetProductResponseDto>> findProduct(@RequestParam String name);
+    ResponseDto<List<GetProductResponseDto>> findProduct(
+            @RequestParam String name,
+            @AuthenticationPrincipal @Nullable UserDetails userDetails
+    );
 
     @Operation(summary = "실시간 상품 인기 검색어 기능", description = "실시간 상품 인기 검색어를 확인할 수 있는 API")
     ResponseDto<List<SearchRankProductResponseDto>> searchRankProduct();

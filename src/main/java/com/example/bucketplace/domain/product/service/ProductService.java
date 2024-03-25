@@ -17,7 +17,6 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -59,22 +58,33 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public GetProductReviewResponseDto getProductDetail(Long productId) {
+    public GetProductReviewResponseDto getProductDetail(String email, Long productId) {
+        Member member = memberRepository.findByEmail(email).orElse(null);
+
         Product product = productRepository.findById(productId).orElseThrow(() ->
                 new BadRequestException(ErrorCode.NOT_FOUND_PRODUCT.getMessage()));
+
         List<GetReviewResponseDto> reviews = reviewRepository.findAllByProductId(productId).stream()
                 .map(GetReviewResponseDto::new)
                 .toList();
-        return new GetProductReviewResponseDto(new GetProductResponseDto(product), reviews);
+
+        boolean isBookmarked = bookmarkRepository.existsByMemberAndProduct(member, product);
+
+        return new GetProductReviewResponseDto(new GetProductResponseDto(product, isBookmarked), reviews);
     }
 
     @Transactional(readOnly = true)
-    public List<GetProductResponseDto> findProduct(String name) {
+    public List<GetProductResponseDto> findProduct(String email, String name) {
+        Member member = memberRepository.findByEmail(email).orElse(null);
+
         List<Product> productList = productRepository.findProductByNameContaining(name);
         redisTemplate.opsForZSet().incrementScore("ranking", name, 1);
 
         return productList.stream()
-                .map(GetProductResponseDto::new)
+                .map(product -> {
+                    boolean isBookmarked = bookmarkRepository.existsByMemberAndProduct(member, product);
+                    return new GetProductResponseDto(product, isBookmarked);
+                })
                 .toList();
     }
 

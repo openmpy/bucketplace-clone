@@ -39,14 +39,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String accessToken = tokenProvider.getAccessTokenFromRequest(request);
         String refreshToken = tokenProvider.getRefreshTokenFromRequest(request);
 
-        if (accessToken == null) {
+        log.info("access token: {}", accessToken);
+        log.info("refresh token: {}", refreshToken);
+
+        if (accessToken == null && refreshToken == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
             tokenProvider.isExpired(accessToken);
-        } catch (ExpiredJwtException e) {
+        } catch (Exception e) {
             if (refreshToken == null) {
                 CustomResponseUtil.fail(response, ErrorCode.EXPIRED_REFRESH_TOKEN.getMessage(), HttpStatus.UNAUTHORIZED);
                 return;
@@ -64,6 +67,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);
 
             setAuthentication(email);
+            filterChain.doFilter(request, response);
             return;
         }
 
@@ -86,6 +90,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);
 
             setAuthentication(email);
+            filterChain.doFilter(request, response);
             return;
         }
 

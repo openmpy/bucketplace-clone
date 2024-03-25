@@ -131,9 +131,9 @@ public class TokenProvider {
                 .replaceAll("\\+", "%20");
 
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
-//        cookie.setDomain("localhost");
+        //        cookie.setDomain("localhost");
         cookie.setPath("/");
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         cookie.setSecure(true);
         cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge((int) (REFRESH_TOKEN_TIME / 1000));

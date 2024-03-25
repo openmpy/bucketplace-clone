@@ -110,7 +110,7 @@ public class MemberService {
 
         Cookie cookie = new Cookie(TokenProvider.REFRESH_TOKEN_COOKIE, null);
         cookie.setPath("/");
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         cookie.setSecure(true);
         cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge(0);

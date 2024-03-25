@@ -111,11 +111,12 @@ public class TokenProvider {
                 .compact();
     }
 
-    public String createRefreshToken(String email, String role) {
+    public String createRefreshToken(String email, String role, String nickname) {
         String token = Jwts.builder()
                 .claim("type", "refresh")
                 .claim("email", email)
                 .claim("role", role)
+                .claim("nickname", nickname)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_TIME))
                 .signWith(secretKey)

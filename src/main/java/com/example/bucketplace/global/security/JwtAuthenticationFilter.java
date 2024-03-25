@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String nickname = ((UserDetailsImpl) authResult.getPrincipal()).getMember().getNickname();
 
         String accessToken = tokenProvider.createAccessToken(email, role, nickname);
-        String refreshToken = tokenProvider.createRefreshToken(email, role);
+        String refreshToken = tokenProvider.createRefreshToken(email, role, nickname);
 
         response.addHeader(TokenProvider.AUTHORIZATION_HEADER, accessToken);
         tokenProvider.addRefreshTokenToCookie(refreshToken, response);

@@ -78,7 +78,7 @@ public class MemberService {
         redisTemplate.delete(refreshToken);
 
         String newAccessToken = tokenProvider.createAccessToken(email, role, nickname);
-        String newRefreshToken = tokenProvider.createRefreshToken(email, role);
+        String newRefreshToken = tokenProvider.createRefreshToken(email, role, nickname);
 
         response.addHeader(TokenProvider.AUTHORIZATION_HEADER, newAccessToken);
         tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);

@@ -133,7 +133,7 @@ public class TokenProvider {
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
         //        cookie.setDomain("localhost");
         cookie.setPath("/");
-        cookie.setHttpOnly(false);
+        cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setAttribute("SameSite", "None");
         cookie.setMaxAge((int) (REFRESH_TOKEN_TIME / 1000));

@@ -128,7 +128,7 @@ public class TokenProvider {
     }
 
     public void addAccessTokenToCookie(String accessToken, HttpServletResponse response) {
-        accessToken = URLEncoder.encode(BEARER_PREFIX + accessToken, StandardCharsets.UTF_8)
+        accessToken = URLEncoder.encode(accessToken, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20");
 
         Cookie cookie = new Cookie(AUTHORIZATION_HEADER, accessToken);

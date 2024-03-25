@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -26,7 +27,7 @@ public class TokenProvider {
     public static final String REFRESH_TOKEN_COOKIE = "Refresh-token";
     public static final String BEARER_PREFIX = "Bearer ";
 
-    private static final long ACCESS_TOKEN_TIME = 60 * 60 * 1000L; // 60분
+    private static final long ACCESS_TOKEN_TIME = 30 * 1000L; // 60분
     private static final long REFRESH_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
 
     private final SecretKey secretKey;
@@ -139,5 +140,17 @@ public class TokenProvider {
         cookie.setMaxAge((int) (REFRESH_TOKEN_TIME / 1000));
 
         response.addCookie(cookie);
+    }
+
+    public String getRefreshTokenFromRequest(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(REFRESH_TOKEN_COOKIE)) {
+                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
+                }
+            }
+        }
+        return null;
     }
 }

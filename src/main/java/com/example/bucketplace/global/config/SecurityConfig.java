@@ -7,6 +7,7 @@ import com.example.bucketplace.global.security.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -33,11 +34,13 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public SecurityConfig(TokenProvider tokenProvider, UserDetailsServiceImpl userDetailsService, AuthenticationConfiguration authenticationConfiguration) {
+    public SecurityConfig(TokenProvider tokenProvider, UserDetailsServiceImpl userDetailsService, AuthenticationConfiguration authenticationConfiguration, RedisTemplate<String, String> redisTemplate) {
         this.tokenProvider = tokenProvider;
         this.userDetailsService = userDetailsService;
         this.authenticationConfiguration = authenticationConfiguration;
+        this.redisTemplate = redisTemplate;
     }
 
     @Bean
@@ -59,7 +62,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() {
-        return new JwtAuthorizationFilter(userDetailsService, tokenProvider);
+        return new JwtAuthorizationFilter(userDetailsService, tokenProvider, redisTemplate);
     }
 
     @Bean

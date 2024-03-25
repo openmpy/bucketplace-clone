@@ -36,7 +36,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String accessToken = tokenProvider.getAccessTokenFromHeader(request);
+        String accessToken = tokenProvider.getAccessTokenFromRequest(request);
         String refreshToken = tokenProvider.getRefreshTokenFromRequest(request);
 
         if (accessToken == null) {
@@ -60,7 +60,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             String newAccessToken = tokenProvider.createAccessToken(email, role, nickname);
             String newRefreshToken = tokenProvider.createRefreshToken(email, role, nickname);
 
-            response.addHeader(TokenProvider.AUTHORIZATION_HEADER, newAccessToken);
+            tokenProvider.addAccessTokenToCookie(newAccessToken, response);
             tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);
 
             setAuthentication(email);
@@ -82,7 +82,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             String newAccessToken = tokenProvider.createAccessToken(email, role, nickname);
             String newRefreshToken = tokenProvider.createRefreshToken(email, role, nickname);
 
-            response.addHeader(TokenProvider.AUTHORIZATION_HEADER, newAccessToken);
+            tokenProvider.addAccessTokenToCookie(newAccessToken, response);
             tokenProvider.addRefreshTokenToCookie(newRefreshToken, response);
 
             setAuthentication(email);

@@ -127,12 +127,25 @@ public class TokenProvider {
         return token;
     }
 
+    public void addAccessTokenToCookie(String accessToken, HttpServletResponse response) {
+        accessToken = URLEncoder.encode(BEARER_PREFIX + accessToken, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20");
+
+        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, accessToken);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setAttribute("SameSite", "None");
+        cookie.setMaxAge((int) (ACCESS_TOKEN_TIME / 1000));
+
+        response.addCookie(cookie);
+    }
+
     public void addRefreshTokenToCookie(String refreshToken, HttpServletResponse response) {
         refreshToken = URLEncoder.encode(refreshToken, StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20");
 
         Cookie cookie = new Cookie(REFRESH_TOKEN_COOKIE, refreshToken);
-        //        cookie.setDomain("localhost");
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
@@ -140,6 +153,18 @@ public class TokenProvider {
         cookie.setMaxAge((int) (REFRESH_TOKEN_TIME / 1000));
 
         response.addCookie(cookie);
+    }
+
+    public String getAccessTokenFromRequest(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(AUTHORIZATION_HEADER)) {
+                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
+                }
+            }
+        }
+        return null;
     }
 
     public String getRefreshTokenFromRequest(HttpServletRequest request) {

@@ -99,9 +99,9 @@ erDiagram
 
 ## 📄 API 명세서
 
-URL: https://www.openmpy.com/swagger-ui/index.html
+URL: http://hanghae-4.ap-northeast-2.elasticbeanstalk.com/swagger-ui/index.html
 
-<img width="726" alt="스크린샷 2024-03-22 오전 10 11 58" src="https://github.com/openmpy/bucketplace-clone/assets/150704638/dab24d61-0607-42e7-92bb-5a9839485480">
+<img width="727" alt="스크린샷 2024-03-25 오후 7 18 56" src="https://github.com/openmpy/bucketplace-clone/assets/150704638/7c198b52-1011-42a1-a6e1-e17634a930b6">
 
 ## 📐 시스템 아키텍처
 

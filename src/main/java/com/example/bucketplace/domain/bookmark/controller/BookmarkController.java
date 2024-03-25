@@ -43,12 +43,12 @@ public class BookmarkController implements BookmarkControllerDocs {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/bookmarks/{id}")
+    @DeleteMapping("/bookmarks/{productId}")
     public void deleteBookmark(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable Long id
+            @PathVariable Long productId
     ) {
-        bookmarkService.deleteBookmark(userDetails.getUsername(), id);
+        bookmarkService.deleteBookmark(userDetails.getUsername(), productId);
     }
 
     @GetMapping("/members/bookmarks")

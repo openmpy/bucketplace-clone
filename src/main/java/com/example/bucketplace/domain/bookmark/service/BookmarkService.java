@@ -68,16 +68,16 @@ public class BookmarkService {
     }
 
     @Transactional
-    public void deleteBookmark(String email, Long id) {
+    public void deleteBookmark(String email, Long productId) {
         Member member = memberRepository.findByEmail(email).orElseThrow(() ->
                 new BadRequestException(ErrorCode.NOT_FOUND_MEMBER_EMAIL.getMessage())
         );
-        Bookmark bookmark = bookmarkRepository.findById(id).orElseThrow(() ->
+        Product product = productRepository.findById(productId).orElseThrow(() ->
+                new BadRequestException(ErrorCode.NOT_FOUND_PRODUCT.getMessage())
+        );
+        Bookmark bookmark = bookmarkRepository.findByMemberAndProduct(member, product).orElseThrow(() ->
                 new BadRequestException(ErrorCode.NOT_FOUND_BOOKMARK_ID.getMessage())
         );
-        if (!bookmark.getMember().equals(member)) {
-            throw new BadRequestException(ErrorCode.NOT_MATCH_BOOKMARK_MEMBER.getMessage());
-        }
 
         bookmarkRepository.delete(bookmark);
     }

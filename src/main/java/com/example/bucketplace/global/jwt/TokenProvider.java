@@ -64,6 +64,15 @@ public class TokenProvider {
                 .get("role", String.class);
     }
 
+    public String getTokenNickname(String token) {
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("nickname", String.class);
+    }
+
     public Claims getMemberInfoFromToken(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
@@ -90,11 +99,12 @@ public class TokenProvider {
                 .before(new Date());
     }
 
-    public String createAccessToken(String email, String role) {
+    public String createAccessToken(String email, String role, String nickname) {
         return BEARER_PREFIX + Jwts.builder()
                 .claim("type", "access")
                 .claim("email", email)
                 .claim("role", role)
+                .claim("nickname", nickname)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_TIME))
                 .signWith(secretKey)
